@@ -15,7 +15,7 @@ a = Analysis(
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
-    noarchive=False,  # これを True にすると、より軽量になります
+    noarchive=True,  # これを True にすると、より軽量になります
 )
 
 pyz = PYZ(a.pure, a.zipped_data,
@@ -25,11 +25,11 @@ exe = EXE(
     pyz,
     a.scripts,
     [],
-    exclude_binaries=True,
+    exclude_binaries=False,  # ここを False に変更します
     name='your_program_name',
     debug=False,
     bootloader_ignore_signals=False,
-    strip=False,  # これを True にすると、実行ファイルが軽量化されます
+    strip=True,  # これを True にすると、実行ファイルが軽量化されます
     upx=True,  # UPX で圧縮し、軽量化します
     upx_exclude=[],
     runtime_tmpdir=None,
@@ -39,10 +39,10 @@ exe = EXE(
 
 coll = COLLECT(
     exe,
-    a.binaries,
+    a.binaries,  # 必要なバイナリを含めます
     a.zipfiles,
     a.datas,
-    strip=False,  # これを True にすると、さらに軽量化されます
+    strip=True,  # これを True にすると、さらに軽量化されます
     upx=True,
     upx_exclude=[],
     name='your_program_name'
